@@ -1,0 +1,87 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Auto-diagnostic · Où en êtes-vous ?</title><style>
+:root{--fonce:#5E1349;--prune:#8C1E70;--clair:#F4E6EE;--rose:#C77BAA;--trame:#E8DCE5;--fond:#FAF6F8;--texte:#3C3C3C;--gris:#8A7A85;--ok:#2E7D4F;--ko:#B3261E;--bleu:#2F6DB3;--vert:#3C8D5A;--orange:#C77700}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--texte);background:var(--fond);font-size:15px;line-height:1.45}
+header{background:var(--fonce);color:#fff;padding:16px 22px}header .k{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#EAD3E3;font-weight:700}header h1{margin:4px 0 0;font-size:22px}
+main{max-width:1180px;margin:0 auto;padding:16px}
+.contexte{background:#fff;border-left:5px solid var(--prune);padding:12px 16px;margin-bottom:14px}
+.contexte h2{margin:0 0 6px;font-size:17px;color:var(--fonce)}.contexte ul{margin:6px 0 0;padding-left:20px}
+.etapes{display:flex;gap:8px;margin:0 0 12px;flex-wrap:wrap}.etapes span{padding:6px 12px;border-radius:16px;background:#fff;border:1px solid var(--trame);font-size:13px;color:var(--gris)}
+.etapes span.on{background:var(--prune);color:#fff;border-color:var(--prune)}.etapes span.fait{background:var(--clair);color:var(--fonce)}
+.grille{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:16px;align-items:start}
+@media(max-width:860px){.grille{grid-template-columns:1fr}}
+.panneau{background:#fff;border:1px solid var(--trame);border-radius:8px;padding:12px}
+.panneau h3{margin:0 0 10px;font-size:16px;color:var(--fonce)}
+.tache{border:1px solid var(--trame);border-radius:8px;padding:10px;margin-bottom:8px;background:#fff}
+.tache.placee{border-color:var(--prune);background:var(--clair)}.tache.fixe{background:#f3f0f2}
+.tache .nom{font-weight:700;color:var(--fonce)}.tache .nom input{width:100%;padding:6px;border:1px solid var(--trame);border-radius:4px;font:inherit}
+.ligne{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px;font-size:14px}
+select,button,input[type=text]{font:inherit}select{padding:5px;border:1px solid #cdbfc8;border-radius:4px;background:#fff}
+button{cursor:pointer;border:0;border-radius:6px;padding:7px 13px;background:var(--prune);color:#fff}
+button.sec{background:#fff;color:var(--prune);border:1px solid var(--prune)}button:disabled,select:disabled,input:disabled{opacity:.55;cursor:not-allowed}
+.badge{font-size:12px;padding:2px 8px;border-radius:10px;background:var(--trame);color:var(--fonce)}
+.prio{font-size:13px;color:var(--fonce)}
+.jour{position:relative;margin-left:52px;border-left:2px solid var(--trame)}
+.h{position:absolute;left:-52px;width:calc(100% + 52px);border-top:1px solid var(--trame);font-size:12px;color:var(--gris)}
+.h span{position:relative;top:-8px;background:#fff;padding-right:4px}
+.ev{position:absolute;left:6px;right:6px;border-radius:6px;padding:3px 8px;font-size:12.5px;color:#fff;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.ev b{display:block;font-size:13px}.ev.c-tache{background:var(--prune)}.ev.c-casting{background:var(--bleu)}.ev.c-autre{background:var(--vert)}.ev.c-pause{background:#9a8c95}.ev.c-imprevu{background:var(--orange)}.ev.c-fixe{background:#7a6a74}
+.ev.chev{outline:3px solid var(--ko)}.ev .cloche{float:right}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+.verif{background:#fff;border:1px solid var(--trame);border-radius:8px;padding:12px 16px}
+.verif li{margin:5px 0;list-style:none;padding-left:4px}.verif ul{padding-left:0;margin:6px 0}
+.ok{color:var(--ok)}.ko{color:var(--ko)}
+.bilan{background:var(--clair);border:2px solid var(--prune);border-radius:8px;padding:12px 16px;margin-top:12px}
+.reporte{font-size:13px;color:var(--gris);margin-top:6px}
+footer{text-align:center;font-size:12px;color:var(--gris);padding:16px}
+
+.col{background:#f3eef1;border-radius:8px;padding:10px;min-height:220px}.col h4{margin:0 0 8px;color:var(--fonce)}.kb{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:760px){.kb{grid-template-columns:1fr}}
+.carte{background:#fff;border-radius:6px;padding:8px 10px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,.12);font-size:14px}.carte .bt{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap}.carte .bt button{padding:3px 8px;font-size:12px}
+.etq{display:inline-block;background:var(--ko);color:#fff;font-size:11px;border-radius:8px;padding:1px 7px;margin-bottom:4px}.ech{font-size:12px;color:var(--fonce)}
+.champ{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}.champ input[type=text]{flex:1;min-width:220px;padding:7px;border:1px solid #cdbfc8;border-radius:4px}
+.todo li{list-style:none;margin:6px 0}.todo{padding-left:0}.fait{text-decoration:line-through;color:var(--gris)}.note{background:#FFF8E1;border-left:4px solid #E0B000;padding:6px 10px;margin:6px 0;font-size:14px}
+.chrono{font-size:56px;font-weight:700;color:var(--fonce);text-align:center;font-variant-numeric:tabular-nums;margin:6px 0}
+.chrono.alerte{color:var(--ko)}textarea{width:100%;min-height:220px;font:inherit;padding:10px;border:1px solid #cdbfc8;border-radius:6px}
+.cpt{font-size:13px;color:var(--gris);text-align:right}.q{border-bottom:1px solid var(--trame);padding:10px 0}.q .opts{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.q .opts label{border:1px solid var(--trame);border-radius:16px;padding:4px 12px;cursor:pointer;font-size:14px;background:#fff}.q .opts input{margin-right:4px}
+.barre{height:16px;background:var(--trame);border-radius:8px;overflow:hidden}.barre div{height:100%;background:var(--prune)}
+.axe{margin:10px 0}.axe .l{display:flex;justify-content:space-between;font-weight:700;color:var(--fonce);margin-bottom:3px}
+.cmp td,.cmp th{padding:8px;border:1px solid var(--trame)}.cmp{border-collapse:collapse;width:100%;background:#fff}.cmp th{background:var(--fonce);color:#fff}
+label.bl{display:block;margin:8px 0 3px;font-weight:700;color:var(--fonce);font-size:14px}.f input,.f select{width:100%;padding:7px;border:1px solid #cdbfc8;border-radius:4px;font:inherit}</style><script src="jspdf.umd.min.js"></script><script src="justif.js"></script></head><body>
+<header><div class="k">Gestion du temps et des priorités · Module 1</div><h1>Auto-diagnostic · Où en êtes-vous ?</h1></header><main><div class="contexte"><h2>Où en êtes-vous ?</h2><p>Pour chacune des 15 affirmations, indiquez à quelle fréquence elle vous correspond. Répondez spontanément : il n'y a ni bonne ni mauvaise réponse, et rien n'est noté.</p>
+<p>Vous obtiendrez votre profil sur cinq axes, avec un conseil pour chaque affirmation. Vos trois axes les plus faibles seront repris au module 10, pour construire votre plan d'action.</p></div>
+<div class="panneau" id="qs"></div><div class="actions"><button id="btnVerif">Voir mon profil</button><button class="sec" id="btnReset">Recommencer</button></div><div id="retour"></div></main>
+<footer>TMK Performances - N° Siret : 49841924100027 - Code NAF : 8559A</footer><script>
+const $=s=>document.querySelector(s);const RAPIDE=new URLSearchParams(location.search).has('rapide');
+const mmss=s=>`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+function stocker(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}function lire(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}}
+const AXES=[{n:'Priorités',m:'modules 2 et 3 (Eisenhower, Pareto)'},{n:'Planification',m:'modules 6 et 9 (time blocking, outils)'},{n:'Interruptions',m:'modules 1, 5 et 7 (voleurs de temps, Pomodoro, règle des 2 minutes)'},{n:'Procrastination et perfectionnisme',m:'module 4 (loi de Parkinson)'},{n:'Imprévus et équilibre',m:'module 8 (gestion des imprévus)'}];
+const Q=[[0,'Je commence ma journée par mes mails.',0,'Commencer par les mails, c\'est laisser les autres fixer vos priorités : commencez par votre tâche la plus importante.'],
+[0,'Je sais distinguer ce qui est urgent de ce qui est important.',1,'Urgent : demande une action rapide. Important : fait avancer vos objectifs. La matrice d\'Eisenhower croise les deux.'],
+[0,'Je consacre mon meilleur moment de la journée aux tâches qui comptent le plus.',1,'Selon Pareto, quelques tâches produisent l\'essentiel des résultats : elles méritent votre meilleur créneau.'],
+[1,'Je planifie ma journée ou ma semaine avant de commencer.',1,'Quelques minutes de planification évitent des heures de dispersion.'],
+[1,'Je note mes tâches dans un outil unique (agenda, liste).',1,'Une seule liste et un seul agenda : plusieurs supports dispersés font perdre du temps.'],
+[1,'J\'oublie des échéances ou des rendez-vous.',0,'Un agenda avec des rappels sécurise les échéances.'],
+[2,'Je réponds aux mails et messages dès qu\'ils arrivent.',0,'Traitez vos mails à heures fixes et coupez les notifications pendant vos blocs de concentration.'],
+[2,'Je suis interrompu(e) plusieurs fois par heure.',0,'Proposez un créneau plutôt que de répondre tout de suite : « je suis à toi à 10 h 30 ».'],
+[2,'Je travaille sur plusieurs choses en même temps.',0,'Le multitâche fait tout commencer et rien finir : une tâche à la fois, jusqu\'à un point d\'arrêt.'],
+[3,'Je repousse les tâches désagréables à plus tard.',0,'Découpez la tâche et commencez par cinq minutes : le plus dur est de démarrer.'],
+[3,'Je passe plus de temps que prévu à peaufiner un travail.',0,'Définissez le « suffisant » avant de commencer et fixez une heure de fin.'],
+[3,'Je me fixe une heure de fin pour mes tâches.',1,'Une heure de fin réaliste empêche le travail de s\'étaler (loi de Parkinson).'],
+[4,'Un imprévu désorganise toute ma journée.',0,'Qualifiez l\'imprévu avant d\'agir, puis déplacez, raccourcissez ou déléguez.'],
+[4,'Je garde des marges dans mon planning.',1,'10 à 15 minutes entre deux blocs suffisent à absorber la plupart des imprévus.'],
+[4,'Je termine mes journées avec le sentiment d\'avoir avancé sur l\'essentiel.',1,'Ce sentiment vient d\'une priorité claire chaque matin, protégée dans l\'agenda.']];
+const F=['Jamais','Rarement','Souvent','Toujours'];let rep=[],valide=false;
+function init(){JUSTIF.vider();rep=Array(Q.length).fill(null);valide=false;$('#btnVerif').disabled=false;$('#btnVerif').textContent='Voir mon profil';$('#retour').innerHTML='';rendre();}
+function rendre(){$('#qs').innerHTML=Q.map((q,i)=>`<div class="q"><b>${i+1}.</b> ${q[1]}<div class="opts">${F.map((f,j)=>`<label><input type="radio" name="q${i}" value="${j}" ${rep[i]===j?'checked':''} ${valide?'disabled':''}>${f}</label>`).join('')}</div>${valide?`<div class="reporte" style="color:var(--fonce)">→ ${q[3]}</div>`:''}</div>`).join('');
+ document.querySelectorAll('#qs input').forEach(r=>r.onchange=()=>{rep[+r.name.slice(1)]=+r.value;});}
+$('#btnVerif').onclick=()=>{const manq=rep.map((r,i)=>r===null?i+1:0).filter(x=>x);if(manq.length){alert('Répondez à toutes les affirmations (manquantes : '+manq.join(', ')+').');return;}
+ const sc=AXES.map((a,k)=>{const its=Q.map((q,i)=>[q,i]).filter(([q])=>q[0]===k);return Math.round(100*its.reduce((s,[q,i])=>s+(q[2]?rep[i]:3-rep[i]),0)/(3*its.length));});
+ const ordre=sc.map((s,k)=>[s,k]).sort((a,b)=>a[0]-b[0]).slice(0,3).map(x=>x[1]);
+ stocker('gtp_axes',{axes:ordre.map(k=>AXES[k].n),scores:sc,date:new Date().toISOString()});
+ valide=true;rendre();$('#btnVerif').disabled=true;$('#btnVerif').textContent='Profil établi';
+ $('#retour').innerHTML=`<div class="panneau"><h3>Votre profil</h3>${AXES.map((a,k)=>`<div class="axe"><div class="l"><span>${a.n}</span><span>${sc[k]} %</span></div><div class="barre"><div style="width:${sc[k]}%"></div></div></div>`).join('')}</div>
+ <div class="bilan"><b>Vos trois axes de progrès</b><ol>${ordre.map(k=>`<li><b>${AXES[k].n}</b> (${sc[k]} %) : suivez avec attention les ${AXES[k].m}.</li>`).join('')}</ol>
+ <p>Un conseil s'affiche désormais sous chaque affirmation. Ces trois axes seront repris au module 10 pour construire votre plan d'action : notez-les si vous changez d'ordinateur.</p></div>`;JUSTIF.sections=[{titre:'Vos réponses aux 15 affirmations',lignes:Q.map((q,i)=>`${i+1}. ${q[1]} : ${F[rep[i]]}`)},{titre:'Votre profil',lignes:AXES.map((a,k)=>`${a.n} : ${sc[k]} %`),bilan:document.querySelector('#retour .bilan').innerHTML}];JUSTIF.bouton('#retour');window.scrollTo(0,document.body.scrollHeight);};
+$('#btnReset').onclick=()=>{if(confirm('Recommencer le questionnaire ?'))init();};init();
+</script></body></html>
